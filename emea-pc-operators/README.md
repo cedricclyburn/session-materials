@@ -13,7 +13,7 @@
 ## Sample Application: Visitors Site
 
 ### Running Example
-* http://visitors-webui-visitors.apps.cluster-jdobpc-94b8.jdobpc-94b8.openshiftworkshop.com/
+* ~~http://visitors-webui-visitors.apps.cluster-jdobpc-94b8.jdobpc-94b8.openshiftworkshop.com/~~
 
 ### Code
 * [Backend](http://github.com/jdob/visitors-service)

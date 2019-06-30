@@ -72,10 +72,10 @@ For simplicity, much of the code will be downloaded directly from git. These wil
 
 ```bash
 cd $OP_DIR/pkg/controller/demosite
-wget https://raw.githubusercontent.com/jdob/emea-pc-operators/master/operator-code/common.go
-wget https://raw.githubusercontent.com/jdob/emea-pc-operators/master/operator-code/backend.go
-wget https://raw.githubusercontent.com/jdob/emea-pc-operators/master/operator-code/frontend.go
-wget https://raw.githubusercontent.com/jdob/emea-pc-operators/master/operator-code/mysql.go
+wget https://raw.githubusercontent.com/jdob/session-materials/master/emea-pc-operators/operator-code/common.go
+wget https://raw.githubusercontent.com/jdob/session-materials/master/emea-pc-operators/operator-code/backend.go
+wget https://raw.githubusercontent.com/jdob/session-materials/master/emea-pc-operators/operator-code/frontend.go
+wget https://raw.githubusercontent.com/jdob/session-materials/master/emea-pc-operators/operator-code/mysql.go
 ```
 
 * **Important** Update all of the downloaded files, changing the `demov1alpha1` import to reflect your GOPATH accordingly. In particular, replace the "jdob" portion of the filepath with your GitHub username.

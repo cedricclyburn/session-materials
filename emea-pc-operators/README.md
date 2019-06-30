@@ -2,7 +2,7 @@
 
 ## Hands On Lab
 
-* [Guide](https://github.com/jdob/emea-pc-operators/blob/master/hands-on.md)
+* [Guide](https://github.com/jdob/session-materials/blob/master/emea-pc-operators/hands-on.md)
 
 ### Prerequisites
 

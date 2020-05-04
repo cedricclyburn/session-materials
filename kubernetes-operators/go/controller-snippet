@@ -1,0 +1,77 @@
+	var result *reconcile.Result
+
+	// == MySQL ==========
+	result, err = r.ensureSecret(request, instance, r.mysqlAuthSecret(instance))
+	if result != nil {
+		return *result, err
+	}
+
+	result, err = r.ensureDeployment(request, instance, r.mysqlDeployment(instance))
+	if result != nil {
+		return *result, err
+	}
+
+	result, err = r.ensureService(request, instance, r.mysqlService(instance))
+	if result != nil {
+		return *result, err
+	}
+
+	mysqlRunning := r.isMysqlUp(instance)
+
+	if !mysqlRunning {
+		// If MySQL isn't running yet, requeue the reconcile
+		// to run again after a delay
+		delay := time.Second*time.Duration(5)
+
+		log.Info(fmt.Sprintf("MySQL isn't running, waiting for %s", delay))
+		return reconcile.Result{RequeueAfter: delay}, nil
+	}
+
+	// == Visitors Backend  ==========
+	result, err = r.ensureDeployment(request, instance, r.backendDeployment(instance))
+	if result != nil {
+		return *result, err
+	}
+
+	result, err = r.ensureService(request, instance, r.backendService(instance))
+	if result != nil {
+		return *result, err
+	}
+
+	err = r.updateBackendStatus(instance)
+	if err != nil {
+		// Requeue the request if the status could not be updated
+		return reconcile.Result{}, err
+	}
+
+	result, err = r.handleBackendChanges(instance)
+	if result != nil {
+		return *result, err
+	}
+
+	// == Visitors Frontend ==========
+	result, err = r.ensureDeployment(request, instance, r.frontendDeployment(instance))
+	if result != nil {
+		return *result, err
+	}
+
+	result, err = r.ensureService(request, instance, r.frontendService(instance),
+	)
+	if result != nil {
+		return *result, err
+	}
+
+	err = r.updateFrontendStatus(instance)
+	if err != nil {
+		// Requeue the request
+		return reconcile.Result{}, err
+	}
+
+	result, err = r.handleFrontendChanges(instance)
+	if result != nil {
+		return *result, err
+	}
+
+	// == Finish ==========
+	// Everything went fine, don't requeue
+	return reconcile.Result{}, nil

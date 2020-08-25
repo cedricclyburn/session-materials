@@ -1,0 +1,61 @@
+---
+- name: odo pre-reqs
+  gather_facts: false
+  hosts: localhost
+  tasks:
+
+  - name: Enable the API servers
+    command: "oc patch servicecatalogapiservers cluster --type=merge -p='{\"spec\": {\"managementState\": \"Managed\"}}'"
+
+  - name: Enable the controller managers
+    command: "oc patch servicecatalogcontrollermanagers cluster --type=merge -p='{\"spec\": {\"managementState\": \"Managed\"}}'"
+
+  - name: Create service broker namespace
+    k8s:
+      name: openshift-template-service-broker
+      api_version: v1
+      kind: Namespace
+      state: present
+
+  - name: Create operator group
+    k8s:
+      state: present
+      definition:
+        api_version: operators.coreos.com/v1
+        kind: OperatorGroup
+        metadata:
+          name: openshift-template-service-broker
+          namespace: openshift-template-service-broker
+        spec:
+          targetNamespaces:
+          - openshift-template-service-broker
+
+  - name: Create subscription
+    k8s:
+      state: present
+      definition:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: Subscription
+        metadata:
+          name: openshift-template-service-broker
+          namespace: openshift-template-service-broker
+        spec:
+          channel: '4.2'
+          name: openshifttemplateservicebroker
+          source: redhat-operators
+          sourceNamespace: openshift-marketplace
+
+  - name: Waiting for the operator deployment to complete
+    pause:
+      seconds: 30
+
+  - name: Create template service broker instance
+    k8s:
+      state: present
+      definition:
+        apiVersion: osb.openshift.io/v1
+        kind: TemplateServiceBroker
+        metadata:
+          name: openshifttemplateservicebroker
+          namespace: openshift-template-service-broker
+        spec: {}

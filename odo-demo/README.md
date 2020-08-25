@@ -1,7 +1,7 @@
 # Setup
 
-* OpenShift cluster, logged in
-  * Install the service catalog
+* OpenShift cluster
+  * Install the service catalog (playbook at https://raw.githubusercontent.com/jdob/session-materials/master/odo-demo/install-service-broker-playbook.yaml)
 * Checkout:
   * https://github.com/openshift-roadshow/concession-kiosk-backend-java
   * https://github.com/openshift-roadshow/concession-kiosk-frontend

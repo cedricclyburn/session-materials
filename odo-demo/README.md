@@ -2,10 +2,9 @@
 
 * OpenShift cluster, logged in
   * Install the service catalog
-* tmux
-  * Window - frontend directory
-  * Window - backend directory
-* Checkout concencessions-backend-java and concessions-frontend
+* Checkout:
+  * https://github.com/openshift-roadshow/concession-kiosk-backend-java
+  * https://github.com/openshift-roadshow/concession-kiosk-frontend
 
 # Script
 

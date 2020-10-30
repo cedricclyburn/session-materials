@@ -1,3 +1,7 @@
+odo 2.0: Cloud-native application development on OpenShift
+extra cluster:
+oc login --token=xH_2aNr5vcnLcWnitLDFrmGSF8MNfwbkdCDJhtqewnI --server=https://api.cluster-6da1.6da1.example.opentlc.com:6443
+
 # Setup
 
 * Access to an OpenShift cluster
@@ -39,6 +43,10 @@ odo create
 ```
 
 ## Deploy NodeJS App
+* Create a new project
+```
+odo project create weather
+```
 * Clone weather project
 ```
 git clone https://github.com/phattp/nodejs-weather-app.git

@@ -2,9 +2,7 @@
 
 * Access to an OpenShift cluster
   * Install odo with binary installation from odo.dev
-  * Checkout code repositories:
-  * https://github.com/openshift-roadshow/concession-kiosk-backend-java
-  * https://github.com/openshift-roadshow/concession-kiosk-frontend
+  * Devfile file reference at odo.dev/file-reference
 
 # Script
 
@@ -19,6 +17,28 @@
 * Give outline of talk (devfiles, updating S2I, starting application)
 
 ## Introduce self
+* Position, school, kubernetes experience
+
+## Resources
+* How to install, resources/docs
+* Katacoda scenario
+
+## What is odo
+* CLI tool for creating apps on k8s
+* Supplement for oc for allowing dev's to focus on code
+  * Simple syntax, client based, node/java support
+  * Speeds up the inner cycle
+  
+# Devfiles
+* Portable YAML file to describe dev enviroment
+  * Can reproduce dev enviroment on any k8s system
+* Can describe container definition, commands, & cloning project
+* Uses default registry but can add new
+```
+odo create
+```
+
+
 
 ## Create the project
 ```

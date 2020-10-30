@@ -71,182 +71,87 @@ odo watch
 ```
 odo config set --env TITLE="Hello Red Hat"
 ```
-
-
-
-
-
-## Create the project
-```
-odo project create demo
-```
-* Show the current project using odo
-```
-odo project get
-```
-* Show the current project is the same in `oc`
-```
-oc project
-```
-
-## Deploy the Backend
-* Change to the backend directory
-```
-cd concession-kiosk-backend-java
-```
-* Build binary locally
-```
-mvn package
-```
-* Create the application
-```
-odo create java:8 backend --binary target/concessions-1.0.jar --app concessions
-```
-* Open up a separate watch to show resources being created
-```
-watch oc get all
-```
-* Push the local odo changes to the cluster
-```
-odo push
-```
-* Show all odo applications
-```
-odo list
-```
-* Show the deployed application pod
-```
-oc get pods
-```
-
-## Create the Backend URL
-* Show that no URL is created by default
-```
-odo url list
-oc get route
-```
-* Create the application URL (will show an error)
-```
-odo url create
-```
-* Create the application URL with all of the necessary data
-```
-odo url create --port 8080
-```
-* Show the URL doesn't exist in the cluster yet
-```
-oc get route
-```
-* Push the URL changes to the cluster
-```
-odo push
-```
-* Get the generated URL
-```
-odo url list
-```
-* Show the URL working (will show no connected database)
-```
-curl $ROUTE/debug
-```
-
-## Deploy MongoDB
-* Show all possible services
-```
-odo catalog list services
-```
-* Show the details for mongo
-```
-odo catalog describe service mongodb-ephemeral
-```
-* Run interactively (accept defaults but wait for service to be ready):
-```
-odo service create --app concessions
-```
-* Show the application components
-```
-odo list
-odo service list
-```
-
-## Link Backend to Database
-* Show the database isn't connected automatically
-```
-curl $ROUTE/debug
-```
-* Link the database to the application (show `oc get pods`)
-```
-odo link mongodb-ephemeral
-```
-* Show the database is connected
-```
-curl $ROUTE/debug
-```
-
-## Deploy the Frontend
-* Change to the frontend directory
-```
-cd concession-kiosk-frontend
-```
-* Create the odo application
-```
-odo create nodejs frontend --app concessions
-```
-* Create the URL before pushing
-```
-odo url create
-```
-* Push the application to the cluster
-```
-odo push
-```
-* Get the generated URL
-```
-odo url list
-```
-* Open the URL in a browser
-* Submit an order (it crashes)
-
-## Link the Frontend and Backend
-* Link the two applications
-```
-odo link backend --port 8080
-```
-* Return to browser and resubmit (it works)
-
-## Live Update
-* Establish a watch for the frontend source
-```
-odo watch
-```
-* Edit views/index.ejs
-* Show the pod didn't restart
-```
-watch oc get pods
-```
-* Refresh browser
-
-## Environment Variable Example
-* Edit views/index.ejs and change title to
-```
-<%= process.env.TITLE %>
-```
-* Show browser and empty title
-* Set an environment variable through odo
-```
-odo config set --env TITLE="Hello World"
-```
 * Push the configuration changes to the cluster
 ```
 odo push --config
 ```
-* Show that this time there is a pod restart
-* Show the configuration changes through odo
+
+## S2I Updating
+* Import openjdk to cluster
 ```
-odo config view
+oc import-image openjdk18 \
+--from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm
 ```
-* Show the odo tracking files
+* tag image as builder to make accessible for odo
 ```
-cat .odo/config.yaml
+oc annotate istag/openjdk18:latest tags=builder
 ```
-* Refresh browser and see the new title
+* check to see created image
+```
+odo catalog list components
+```
+* clone demo repo into folder
+```
+git clone https://github.com/openshift-evangelists/Wild-West-Backend backend
+```
+* build source files with maven to create JAR
+```
+mvn package
+```
+* create a component configuration of java 
+```
+odo create openjdk18 backend --binary target/wildwest-1.0.jar
+```
+* run convert command to create devfile
+```
+odo utils convert-to-devfile
+```
+* push component to your cluster
+```
+odo push
+```
+## Minikube
+* Start minikube
+```
+minikube start
+```
+* find ingress ip of kubernetes
+```
+minikube ip
+```
+* create a new project
+```
+odo project create minikube
+```
+* list all devfile components
+```
+odo catalog list components
+```
+* download example nodejs component
+```
+git clone https://github.com/odo-devfiles/nodejs-ex
+```
+* cd, then create component
+```
+odo create nodejs mynodejs
+```
+* create url in order to access deployed content
+```
+odo url create --host x
+```
+* push component to the cluster
+```
+odo push
+```
+* list the urls of component
+```
+odo url list
+```
+* view your deployed application using url
+```
+curl x
+```
+* delete your deployed application
+```
+odo delete
+```

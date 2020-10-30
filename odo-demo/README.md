@@ -1,13 +1,24 @@
 # Setup
 
 * Access to an OpenShift cluster
-  * Install the service catalog (playbook at https://raw.githubusercontent.com/jdob/session-materials/master/odo-demo/install-service-broker-playbook.yaml)
-* Install odo: https://github.com/openshift/odo/releases
-* Checkout code repositories:
+  * Install odo with binary installation from odo.dev
+  * Checkout code repositories:
   * https://github.com/openshift-roadshow/concession-kiosk-backend-java
   * https://github.com/openshift-roadshow/concession-kiosk-frontend
 
 # Script
+
+## Thank Edson
+* Give background info
+* Red Hat Developer channel work
+* Thanks for being here
+
+## Introduce odo
+* Give background information (openshift do)
+* Functunality, basic info
+* Give outline of talk (devfiles, updating S2I, starting application)
+
+## Introduce self
 
 ## Create the project
 ```

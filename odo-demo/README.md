@@ -29,7 +29,7 @@
   * Simple syntax, client based, node/java support
   * Speeds up the inner cycle
   
-# Devfiles
+## Devfiles
 * Portable YAML file to describe dev enviroment
   * Can reproduce dev enviroment on any k8s system
 * Can describe container definition, commands, & cloning project
@@ -37,6 +37,42 @@
 ```
 odo create
 ```
+
+## Deploy NodeJS App
+* Clone weather project
+```
+git clone https://github.com/phattp/nodejs-weather-app.git
+```
+* cd, create component configuration with name weather
+```
+odo create nodejs weather
+```
+* create url to access deployed content
+```
+odo url create
+```
+* push the component to cluster, create & run pod
+``` 
+odo push
+```
+* list urls of component
+```
+odo url list
+```
+
+## Watch changes
+* watch for changes in directory for component
+```
+odo watch
+```
+
+## Set enviroment variables
+* To set an enviroment variable
+```
+odo config set --env TITLE="Hello Red Hat"
+```
+
+
 
 
 

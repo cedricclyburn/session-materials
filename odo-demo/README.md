@@ -1,6 +1,6 @@
 odo 2.0: Cloud-native application development on OpenShift
 extra cluster:
-oc login --token=xH_2aNr5vcnLcWnitLDFrmGSF8MNfwbkdCDJhtqewnI --server=https://api.cluster-6da1.6da1.example.opentlc.com:6443
+oc login --token=LwH_jKSglTZz4qi_vu_Pfxn9hNO_ftWiiEJ-JexAMVg --server=https://api.cluster-rdu-983b.rdu-983b.example.opentlc.com:6443
 
 # Setup
 
